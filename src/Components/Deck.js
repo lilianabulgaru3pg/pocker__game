@@ -1,18 +1,27 @@
-import React from "react";
+import React, {Component} from "react";
 import { Card } from "../Styles/Styled";
 
-const Deck = ({ suits, values }) => (
-	<>
-		{suits.map(suit => (
+class Deck extends Component {
+	state = {
+		selected: {suit: null, value: null}
+	}
+	render() {
+		return <>
+		{this.props.suits.map(suit => (
 			<div key={suit}>
-				{values.map(value => (
-					<Card key={suit+value} suit={suit} value={value}>
+				{this.props.values.map(value => (
+					<Card key={suit+value} suit={suit} value={value} selected={suit === this.state.selected.suit && value === this.state.selected.value}
+						onClick={() =>{
+							this.props.addCard(suit, value);
+							this.setState({selected: {suit, value}});
+						}}
+						>
 						{value}
 					</Card>
 				))}
 			</div>
-		))}
-	</>
-);
+		))}</>
+	}
+}
 
 export default Deck;
