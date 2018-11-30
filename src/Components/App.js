@@ -7,9 +7,6 @@ import Deck from "./Deck";
 import { Card, PlayerHand, Button, Footer } from "../Styles/Styled";
 
 class App extends Component {
-	state = {
-		selectedCards: []
-	}
 	render() {
 		return (
 				<Layout>
@@ -18,11 +15,7 @@ class App extends Component {
 						<h1>
 						Cards deck
 						</h1>
-						<Deck suits={suits} values={values}
-							addCard={(suit, value) => {
-								this.setState({selectedCards: [...this.state.selectedCards, {suit, value}]});
-							}}
-						/>
+						<Deck suits={suits} values={values} />
 					</section>
 					<section>
 						<header>
@@ -42,13 +35,21 @@ class App extends Component {
 									</Button>
 								</p>
 								<PlayerHand>
-										{this.state.selectedCards.slice(0, 5).map(card => {
-											return (
-												<Card suit={card.suit} value={card.value} selected={false}>
-													{card.value}
-												</Card>
-											)
-										} )}
+										<Card suit="D" value="A" selected={true}>
+											A
+										</Card>
+										<Card suit="D" value="K">
+											K
+										</Card>
+										<Card suit="D" value="Q">
+											Q
+										</Card>
+										<Card suit="D" value="J">
+											J
+										</Card>
+										<Card suit="D" value="T">
+											T
+										</Card>
 								</PlayerHand>
 							</article>
 							<article>
