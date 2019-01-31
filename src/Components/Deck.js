@@ -1,18 +1,18 @@
-import React from "react";
-import { Card } from "../Styles/Styled";
+import React, { Fragment } from "react";
+import { Card, StyledDeck } from "../Styles/Styled";
 
 const Deck = ({ suits, values }) => (
-	<>
+	<StyledDeck>
 		{suits.map(suit => (
-			<div key={suit}>
+			<Fragment key={suit}>
 				{values.map(value => (
 					<Card key={suit+value} suit={suit} value={value}>
 						{value}
 					</Card>
 				))}
-			</div>
+			</Fragment>
 		))}
-	</>
+	</StyledDeck>
 );
 
 export default Deck;

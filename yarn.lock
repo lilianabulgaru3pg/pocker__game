@@ -6145,10 +6145,6 @@ pnp-webpack-plugin@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pnp-webpack-plugin/-/pnp-webpack-plugin-1.1.0.tgz#947a96d1db94bb5a1fc014d83b581e428699ac8c"
 
-pokersolver@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/pokersolver/-/pokersolver-2.1.2.tgz#06ff3c0cd6b2850fa89e60dda46fe52c1bb15e2f"
-
 portfinder@^1.0.9:
   version "1.0.17"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.17.tgz#a8a1691143e46c4735edefcf4fbcccedad26456a"

@@ -27,7 +27,7 @@ If you're not familiar with those or if you know something more suited to solve 
 To start
 
 ```
-npm start
+yarn && yarn start
 ```
 
 To add a package to the application you should run the following command
@@ -41,6 +41,6 @@ yarn add <package-name>
 The tests are running using Jest and Enzyme
 
 ```
-npm test
-npm test -- --watch
+yarn test
+yarn test -- --watch
 ```

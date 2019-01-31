@@ -35,7 +35,6 @@ export const Card = styled.div`
 	position: relative;
 	display: inline-block;
 	text-align: center;
-	margin: 5px;
 	font-weight: 700;
 
 	border: 2px solid;
@@ -78,7 +77,7 @@ export const Footer = styled.footer`
 	padding: 20px 0;
 `;
 
-export const Button = styled.button`
+export const StyledButton = styled.button`
 	background: transparent;
 	border: 1px solid #eee;
 	border-radius: 5px;
@@ -95,4 +94,19 @@ export const PlayerHand = styled.div`
 	padding: 10px;
 	border-radius: 5px;
 	min-height: 55px;
+
+	${Card} {
+		margin: 5px;
+	}
+`;
+
+export const StyledDeck = styled.section`
+	display: grid;
+	grid-template-columns: repeat(13, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+	text-align: center;
+
+	${Card} {
+		margin: 10px auto;
+	}
 `;
