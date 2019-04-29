@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { suits, values } from "../utils";
+import { suits, values, max_players } from "../utils";
 
 import Layout from "./Layout";
 import Deck from "./Deck";
@@ -10,31 +10,61 @@ import Button from "./Button";
 import { Footer } from "../Styles/Styled";
 
 class App extends Component {
-	render() {
-		return (
-				<Layout>
+  state = {
+    players: []
+	};
+	
+  addPlayer = () => {
+    const {
+      players,
+      players: { length }
+    } = this.state;
+    if (players && length < max_players)
+      this.setState(prevState => ({
+        players: [...prevState.players, {}]
+      }));
+  };
 
-					<section>
-						<h1>Cards deck</h1>
-						<Deck suits={suits} values={values} />
-					</section>
-					<section>
-						<header>
-							<h1>Players</h1>
-						</header>
-						<section>
-							<Player name="Player 1" />
-							<Player name="Player 2" />
-						</section>
-						<Footer>
-							<Button icon="🙋‍♀️">Add new player</Button>
-							<Button icon="🏆">Find the winner</Button>
-						</Footer>
-					</section>
+  handleRemove = idx => {
+    this.setState(prevState => ({
+      players: prevState.players.filter((_, i) => i !== idx)
+    }));
+  };
 
-				</Layout>
-		);
-	}
+  render() {
+    const { players } = this.state;
+
+    return (
+      <Layout>
+        <section>
+          <h1>Cards deck</h1>
+          <Deck suits={suits} values={values} />
+        </section>
+        <section>
+          <header>
+            <h1>Players</h1>
+          </header>
+          <section>
+            {players.map((_, i) => (
+              <Player
+                key={i}
+                idx={i}
+                handleRemove={this.handleRemove}
+              />
+            ))}
+          </section>
+          <Footer>
+            <Button icon="🙋‍♀️" onClick={this.addPlayer}>
+              Add new player
+            </Button>
+            <Button icon="🏆" onClick={this.findWinner}>
+              Find the winner
+            </Button>
+          </Footer>
+        </section>
+      </Layout>
+    );
+  }
 }
 
 export default App;
