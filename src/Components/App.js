@@ -12,14 +12,18 @@ import { Footer } from "../Styles/Styled";
 
 class App extends Component {
   state = {
-    players: []
+    players: [],
+    cardsDeck: []
   };
 
   playersCards = [];
-  cardsDeck = [];
 
   componentDidMount() {
     this.newGame();
+  }
+
+  shouldComponentUpdate(_nextProps, nextState) {
+    return true;
   }
 
   newGame = () => {
@@ -27,7 +31,7 @@ class App extends Component {
     values.forEach(value =>
       suits.forEach(suit => cardsDeck.push(value + suit))
     );
-    this.cardsDeck = this.randomDeck( cardsDeck );    
+    this.setState({ cardsDeck: this.randomDeck(cardsDeck) });
   };
 
   randomDeck(cardsDeck) {
@@ -43,12 +47,18 @@ class App extends Component {
   addPlayer = () => {
     const {
       players,
-      players: { length }
+      players: { length },
+      cardsDeck
     } = this.state;
     if (players && length < max_players) {
-      this.playersCards.push(this.cardsDeck.splice(5, 5));
+      console.log("this.playersCards", this.playersCards);
+      this.playersCards.push(cardsDeck.slice(0, 5));
+      console.log("this.playersCards", this.playersCards);
       this.setState({
-        players: update(players, { $push: [{ name: `Player ${length + 1} ` }] })
+        players: update(players, {
+          $push: [{ name: `Player ${length + 1} ` }]
+        }),
+        cardsDeck: update(cardsDeck, { $splice: [[0, 5]] })
       });
     }
   };
@@ -62,30 +72,33 @@ class App extends Component {
 
   findWinner = () => {
     const hands = this.playersCards.map(playerCards => playerCards.join(" "));
-    const {length} = this.playersCards;
+    const { length } = this.playersCards;
     let winner = 0;
     for (let i = 1; i < length; i++) {
       if (pocker.judgeWinner([hands[winner], hands[i]]) !== 0) winner = i;
     }
-    alert(`Winner is ${this.state.players[winner].name} `);
+    alert(`Winner is ${this.state.players[winner].name} !`);
   };
 
   handleRemove = idx => {
-    this.cardsDeck = this.cardsDeck.concat(...this.playersCards.splice(idx, 1));
-    const { players } = this.state;
+    const { players, cardsDeck } = this.state;
+    // this.cardsDeck = this.cardsDeck.concat(...this.playersCards.splice(idx, 1));
     this.setState({
-      players: update(players, { $splice: [[idx, 1]] })
+      players: update(players, { $splice: [[idx, 1]] }),
+      cardsDeck: update(cardsDeck, {
+        $splice: [[cardsDeck.length, 0, ...this.playersCards.splice( idx, 1 ).flat()]]
+      })
     });
   };
 
   render() {
-    const { players } = this.state;
-
+    const { players, cardsDeck } = this.state;
+    console.log("render cards", cardsDeck);
     return (
       <Layout>
         <section>
           <h1>Cards deck</h1>
-          <Deck suits={suits} values={values} remainCards={this.cardsDeck} />
+          <Deck suits={suits} values={values} remainCards={cardsDeck} />
         </section>
         <section>
           <header>
