@@ -10,13 +10,15 @@ class Player extends Component {
 
   handleEdit = () => {
     const { editable } = this.state;
-    !editable ? this.myInp.focus() : this.myInp.blur();
+    editable ? this.myInp.focus() : this.myInp.blur();
     this.setState({ editable: !editable });
-    
+
+    if (editable)
+      this.props.savePlayersName(this.myInp.textContent, this.props.idx);
   };
 
   render() {
-    const { idx, handleRemove } = this.props;
+    const { idx, handleRemove, name, cards } = this.props;
     const { editable } = this.state;
     return (
       <article>
@@ -25,9 +27,9 @@ class Player extends Component {
             contentEditable={editable}
             suppressContentEditableWarning
             ref={ip => (this.myInp = ip)}
-            className={editable ? "edit-mode" : ""}
+            className={editable ? "edit-mode" : "normal-mode"}
           >
-            {`Player ${idx + 1} `}
+            {name}
           </span>
           <Button icon="✏️" onClick={this.handleEdit}>
             {editable ? "Save" : "Edit"}
@@ -37,21 +39,14 @@ class Player extends Component {
           </Button>
         </p>
         <PlayerHand>
-          <Card suit="D" value="A" selected={true}>
-            A
-          </Card>
-          <Card suit="D" value="K">
-            K
-          </Card>
-          <Card suit="D" value="Q">
-            Q
-          </Card>
-          <Card suit="D" value="J">
-            J
-          </Card>
-          <Card suit="D" value="T">
-            T
-          </Card>
+          {cards.map(card => {
+            const c = card.split("");
+            return (
+              <Card value={c[0]} suit={c[1]} key={card}>
+                {c[0]}
+              </Card>
+            );
+          })}
         </PlayerHand>
       </article>
     );

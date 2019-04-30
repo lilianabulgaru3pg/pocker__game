@@ -5,6 +5,7 @@
   "dependencies": {
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
+    "immutability-helper": "^3.0.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "2.0.4",
@@ -25,5 +26,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-	]
+  ]
 }
