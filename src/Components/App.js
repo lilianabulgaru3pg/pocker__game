@@ -22,10 +22,6 @@ class App extends Component {
     this.newGame();
   }
 
-  shouldComponentUpdate(_nextProps, nextState) {
-    return true;
-  }
-
   newGame = () => {
     let cardsDeck = [];
     values.forEach(value =>
@@ -51,9 +47,7 @@ class App extends Component {
       cardsDeck
     } = this.state;
     if (players && length < max_players) {
-      console.log("this.playersCards", this.playersCards);
       this.playersCards.push(cardsDeck.slice(0, 5));
-      console.log("this.playersCards", this.playersCards);
       this.setState({
         players: update(players, {
           $push: [{ name: `Player ${length + 1} ` }]
@@ -82,18 +76,18 @@ class App extends Component {
 
   handleRemove = idx => {
     const { players, cardsDeck } = this.state;
-    // this.cardsDeck = this.cardsDeck.concat(...this.playersCards.splice(idx, 1));
     this.setState({
       players: update(players, { $splice: [[idx, 1]] }),
       cardsDeck: update(cardsDeck, {
-        $splice: [[cardsDeck.length, 0, ...this.playersCards.splice( idx, 1 ).flat()]]
+        $splice: [
+          [cardsDeck.length, 0, ...this.playersCards.splice(idx, 1).flat()]
+        ]
       })
     });
   };
 
   render() {
     const { players, cardsDeck } = this.state;
-    console.log("render cards", cardsDeck);
     return (
       <Layout>
         <section>
