@@ -5187,6 +5187,11 @@ lodash.uniq@^4.5.0:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
 
+lodash@^3.10.1:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
+  integrity sha1-W/Rejkm6QYnhfUgnid/RW9FAt7Y=
+
 loglevel@^1.4.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.6.1.tgz#e0fc95133b6ef276cdc8887cdaf24aa6f156f8fa"
@@ -6151,6 +6156,13 @@ pn@^1.1.0:
 pnp-webpack-plugin@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pnp-webpack-plugin/-/pnp-webpack-plugin-1.1.0.tgz#947a96d1db94bb5a1fc014d83b581e428699ac8c"
+
+poker-hands@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/poker-hands/-/poker-hands-1.0.2.tgz#617841fb40c694f6c88e842aafd6787118bcd3c3"
+  integrity sha1-YXhB+0DGlPbIjoQqr9Z4cRi808M=
+  dependencies:
+    lodash "^3.10.1"
 
 portfinder@^1.0.9:
   version "1.0.17"
