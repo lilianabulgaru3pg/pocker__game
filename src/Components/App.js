@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import update from "immutability-helper"; //https://reactjs.org/docs/update.html
-
+import pocker from "poker-hands";
 import { suits, values, max_players } from "../utils";
 
 import Layout from "./Layout";
@@ -12,30 +12,32 @@ import { Footer } from "../Styles/Styled";
 
 class App extends Component {
   state = {
-    players: [],
-    unSelectedDeck: []
+    players: []
   };
 
   playersCards = [];
   cardsDeck = [];
 
   componentDidMount() {
+    this.newGame();
+  }
+
+  newGame = () => {
     let cardsDeck = [];
     values.forEach(value =>
       suits.forEach(suit => cardsDeck.push(value + suit))
     );
-    this.cardsDeck = cardsDeck;
-    this.randomizeDeck();
-    console.log("cards", cardsDeck);
-  }
+    this.cardsDeck = this.randomDeck( cardsDeck );    
+  };
 
-  randomizeDeck() {
-    for (let i = this.cardsDeck.length - 1; i > 0; i--) {
+  randomDeck(cardsDeck) {
+    for (let i = cardsDeck.length - 1; i > 0; i--) {
       let idx = Math.floor(Math.random() * i);
-      let temp = this.cardsDeck[i];
-      this.cardsDeck[i] = this.cardsDeck[idx];
-      this.cardsDeck[idx] = temp;
+      let temp = cardsDeck[i];
+      cardsDeck[i] = cardsDeck[idx];
+      cardsDeck[idx] = temp;
     }
+    return cardsDeck;
   }
 
   addPlayer = () => {
@@ -45,8 +47,6 @@ class App extends Component {
     } = this.state;
     if (players && length < max_players) {
       this.playersCards.push(this.cardsDeck.splice(5, 5));
-      console.log(this.playersCards);
-
       this.setState({
         players: update(players, { $push: [{ name: `Player ${length + 1} ` }] })
       });
@@ -60,8 +60,18 @@ class App extends Component {
     });
   };
 
+  findWinner = () => {
+    const hands = this.playersCards.map(playerCards => playerCards.join(" "));
+    const {length} = this.playersCards;
+    let winner = 0;
+    for (let i = 1; i < length; i++) {
+      if (pocker.judgeWinner([hands[winner], hands[i]]) !== 0) winner = i;
+    }
+    alert(`Winner is ${this.state.players[winner].name} `);
+  };
+
   handleRemove = idx => {
-    this.cardsDeck = this.cardsDeck.concat( ...this.playersCards.splice(idx, 1));
+    this.cardsDeck = this.cardsDeck.concat(...this.playersCards.splice(idx, 1));
     const { players } = this.state;
     this.setState({
       players: update(players, { $splice: [[idx, 1]] })
